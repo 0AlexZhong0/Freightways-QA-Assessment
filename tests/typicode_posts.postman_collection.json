@@ -16,7 +16,37 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"",
+							"pm.test(\"Valid response body\", function () {",
+							"    const posts = pm.response.json()",
+							"    const postOne = posts[0]",
+							"",
+							"    const postsSchema = {",
+							"        type: \"array\",",
+							"        items: [{",
+							"            properties: {",
+							"                userId: { type: \"integer\" },",
+							"                id: { type: \"integer\" },",
+							"                title: { type: \"string\" },",
+							"                body: { type: \"string\" },",
+							"            },",
+							"            required: [\"userId\", \"id\", \"title\", \"body\"]",
+							"        }]",
+							"    };",
+							"",
+							"",
+							"    pm.response.to.have.jsonSchema(postsSchema)",
+							"",
+							"    pm.expect(postOne.userId).to.eql(1);",
+							"    pm.expect(postOne.id).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"    pm.response.to.have.header(\"Expires\")",
+							"});",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -50,7 +80,34 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"",
+							"pm.test(\"Valid response body\", function () {",
+							"    const postOne = pm.response.json()",
+							"",
+							"    const postSchema = {",
+							"        type: \"object\",",
+							"        properties: {",
+							"            userId: { type: \"integer\" },",
+							"            id: { type: \"integer\" },",
+							"            title: { type: \"string\" },",
+							"            body: { type: \"string\" },",
+							"        },",
+							"        required: [\"userId\", \"id\", \"title\", \"body\"]",
+							"    };",
+							"",
+							"",
+							"    pm.response.to.have.jsonSchema(postSchema)",
+							"",
+							"    pm.expect(postOne.userId).to.eql(1);",
+							"    pm.expect(postOne.id).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"    pm.response.to.have.header(\"Expires\")",
+							"});",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -70,6 +127,238 @@
 					"path": [
 						"posts",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1e5331d7-e76d-4162-ac73-269cbbc6ee01",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Valid response body\", function () {",
+							"    const newPost = pm.response.json()",
+							"",
+							"    const postSchema = {",
+							"        type: \"object\",",
+							"        properties: {",
+							"            userId: { type: \"integer\" },",
+							"            id: { type: \"integer\" },",
+							"            title: { type: \"string\" },",
+							"            body: { type: \"string\" },",
+							"        },",
+							"        required: [\"userId\", \"id\", \"title\", \"body\"]",
+							"    };",
+							"",
+							"",
+							"    pm.response.to.have.jsonSchema(postSchema)",
+							"",
+							"    pm.expect(newPost.userId).to.eql(1);",
+							"    pm.expect(newPost.id).to.eql(101);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"    pm.response.to.have.header(\"Expires\")",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"title\": \"A cool title for user one\",\n    \"body\": \"Great body matchs with the title\",\n    \"userId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Post By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b8c306b6-b224-47f8-a410-736db962cd6e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Valid response body\", function () {",
+							"    const postOne = pm.response.json()",
+							"",
+							"    const postSchema = {",
+							"        type: \"object\",",
+							"        properties: {",
+							"            userId: { type: \"integer\" },",
+							"            id: { type: \"integer\" },",
+							"            title: { type: \"string\" },",
+							"            body: { type: \"string\" },",
+							"        },",
+							"        required: [\"userId\", \"id\", \"title\", \"body\"]",
+							"    };",
+							"",
+							"",
+							"    pm.response.to.have.jsonSchema(postSchema)",
+							"",
+							"    pm.expect(postOne.userId).to.eql(1);",
+							"    pm.expect(postOne.id).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"    pm.response.to.have.header(\"Expires\")",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"title\": \"A cool title for user one\",\n    \"body\": \"Great body matchs with the title\",\n    \"userId\": 1,\n    \"id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60864112-6e92-4326-9a5b-98bc3f1fc9aa",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Recieved empty object', function () {",
+							"    pm.expect(pm.response.json()).to.eql({})",
+							"})",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"    pm.response.to.have.header(\"Expires\")",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Not Found Path",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a11cdeb2-4721-4e22-8f9e-4ed741dae653",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Result is empty', function () {",
+							"    const res = pm.response.json()",
+							"    pm.expect(res).to.eql({})",
+							"})",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"    pm.response.to.have.header(\"Expires\")",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/idontexist",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"idontexist"
 					]
 				}
 			},
